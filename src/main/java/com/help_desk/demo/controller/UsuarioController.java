@@ -1,37 +1,37 @@
 package com.help_desk.demo.controller;
 
 import com.help_desk.demo.entities.Usuario;
+import com.help_desk.demo.exception.UsuarioException;
 import com.help_desk.demo.repositorio.UsuarioRepositorio;
+import com.help_desk.demo.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/usuario")
+@RequestMapping("/usuario")
 public class UsuarioController {
 
     @Autowired
-    private UsuarioRepositorio usuarioRepositorio;
+    private UsuarioService usuarioService;
 
     @PostMapping
     public Usuario criaUsuarios(@RequestBody Usuario usuario) {
-        Usuario resultado = usuarioRepositorio.save(usuario);
+        Usuario resultado = usuarioService.save(usuario);
         return resultado;
 
     }
 
     @GetMapping
     public List<Usuario> buscaUsuarios() {
-       List<Usuario> resultado = usuarioRepositorio.findAll();
-       return resultado;
+        List<Usuario> resultado = usuarioService.findAll();
+        return resultado;
 
     }
 
     @GetMapping(value = "/{id}")
     public Usuario buscaUsuariosPorId(@PathVariable Long id) {
-        Usuario resultado = usuarioRepositorio.findById(id).get();
-        return resultado;
-
+        return usuarioService.findById(id);
     }
 }
