@@ -4,6 +4,7 @@ package com.help_desk.demo.service;
 import com.help_desk.demo.entities.BalcaoAtendimento;
 import com.help_desk.demo.entities.Chamado;
 import com.help_desk.demo.entities.Usuario;
+import com.help_desk.demo.exception.UsuarioException;
 import com.help_desk.demo.repositorio.ChamadoRepositorio;
 import com.help_desk.demo.repositorio.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,11 @@ public class ChamadoService {
     private BalcaoAtendimentoService balcaoAtendimentoService;
 
     public Chamado findById(Long id) {
-        return chamadoRepositorio.findById(id).orElse(null);
+        Chamado resultado = chamadoRepositorio.findById(id).orElse(null);
+        if (resultado == null) {
+            throw new UsuarioException("Chamdo Não encontrado");
+        }
+        return resultado;
     }
 
     public List<Chamado> buscaChamado() {
@@ -38,7 +43,7 @@ public class ChamadoService {
 
         chamado.setUsuario(usuario);
 
-        BalcaoAtendimento balcaoAtendimento = balcaoAtendimentoService.findById(chamado.getBalcaoAtendimento().getId());
+        BalcaoAtendimento balcaoAtendimento = balcaoAtendimentoService.buscaBalcaoPorId(chamado.getBalcaoAtendimento().getId());
 
         int novaQuantidade = (balcaoAtendimento.getQuandidateAtendimento() == null ? 0 : balcaoAtendimento.getQuandidateAtendimento()) + 1;
         balcaoAtendimento.setQuandidateAtendimento(novaQuantidade);

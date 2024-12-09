@@ -1,6 +1,7 @@
 package com.help_desk.demo.service;
 
 import com.help_desk.demo.entities.Atendente;
+import com.help_desk.demo.exception.AtendenteException;
 import com.help_desk.demo.exception.UsuarioException;
 import com.help_desk.demo.repositorio.AtendenteRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,12 @@ public class AtendenteService {
     @Autowired
     private AtendenteRepositorio atendenteRepositorio;
 
-    public Atendente findById(Long id) {
-        return atendenteRepositorio.findById(id).orElse(null);
+    public Atendente findById(Long id) throws AtendenteException {
+        Atendente resultado = atendenteRepositorio.findById(id).orElse(null);
+        if (resultado == null) {
+            throw new UsuarioException("Atendente Não encontrado");
+        }
+        return resultado;
     }
 
     public List<Atendente> findAll() {
@@ -25,7 +30,7 @@ public class AtendenteService {
 
     public Atendente save(Atendente atendente) throws UsuarioException {
         Atendente resultado = atendenteRepositorio.save(atendente);
-        return  resultado;
+        return resultado;
     }
 
     public void delete(Long id) {

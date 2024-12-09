@@ -19,7 +19,7 @@ public class UsuarioService {
     public Usuario findById(Long id) throws UsuarioException {
         Usuario resultado =  usuarioRepositorio.findById(id).orElse(null);
         if (resultado == null) {
-            throw new UsuarioException("Usuário Nao encontrado");
+            throw new UsuarioException("Usuário Não encontrado");
         }
         return resultado;
     }

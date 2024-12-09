@@ -7,7 +7,6 @@ import com.help_desk.demo.service.BalcaoAtendimentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -22,24 +21,17 @@ public class BalcaoAtendimentoController {
 
     @PostMapping
     public BalcaoAtendimento criaBalcaoAtendimento(@RequestBody BalcaoAtendimento balcaoAtendimento) {
-        balcaoAtendimento.setDataHoraAtendimento(LocalDateTime.now());
-        BalcaoAtendimento resultado = balcaoAtendimentoService.save(balcaoAtendimento);
-        return resultado;
+       return balcaoAtendimentoService.save(balcaoAtendimento);
 
     }
 
     @GetMapping
     public List<BalcaoAtendimento> buscaAtendimento() {
-        List<BalcaoAtendimento> resultado = balcaoAtendimentoService.findAll();
-        return resultado;
-
+        return balcaoAtendimentoService.findAll();
     }
 
     @GetMapping("/{id}/chamados")
     public List<Chamado> buscaChamadosPorBalcao(@PathVariable Long id) {
-        BalcaoAtendimento balcao = balcaoAtendimentoService.findById(id);
-//                .orElseThrow(() -> new RuntimeException("Balcão não encontrado"));
-        List<Chamado> chamados = chamadoRepositorio.findByBalcaoAtendimento(balcao);
-        return chamados;
+        return balcaoAtendimentoService.findById(id);
     }
 }

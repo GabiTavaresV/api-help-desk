@@ -18,12 +18,6 @@ public class ChamadoController {
     @Autowired
     private ChamadoService chamadoService;
 
-    @Autowired
-    private UsuarioRepositorio usuarioRepositorio;
-
-    @Autowired
-    private BalcaoAtendimentoService balcaoAtendimentoService;
-
     @PostMapping
     public Chamado criaChamado(@RequestBody Chamado chamado) {
         return chamadoService.registraChamado(chamado);

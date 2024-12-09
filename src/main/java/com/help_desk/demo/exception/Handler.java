@@ -13,4 +13,19 @@ public class Handler {
     public ResponseEntity<String> handleUsuarioException(UsuarioException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
+
+    @ExceptionHandler(AtendenteException.class)
+    public ResponseEntity<String> handleAtendenteException(AtendenteException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(BalcaoException.class)
+    public ResponseEntity<String> handleBalcaoException(BalcaoException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(ChamadoException.class)
+    public ResponseEntity<String> handleChamadoException(BalcaoException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
 }
